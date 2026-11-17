@@ -83,7 +83,7 @@ function updateLanguage() {
   root.dataset.language = language;
   for (const [el, english] of strings) el.textContent = t(el.dataset.i18n,english);
   sizeHeroCopy();
-  document.title = language === 'tag' ? 'Smoke Less — Bawas nang kaunti. Mas may oras para sa’yo.' : 'Smoke Less — A little less. A little more you.';
+  document.title = 'Smoke Less — Offline Cigarette Tracker for Android';
   $('#release-date').textContent = new Intl.DateTimeFormat(language === 'tag' ? 'fil-PH' : 'en-PH',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'}).format(new Date('2026-11-17T00:00:00Z'));
   updateLabels(); updateCalculator(); updateScreenshot(false);
 }

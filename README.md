@@ -34,6 +34,7 @@ Official references: [Static HTML](https://developers.cloudflare.com/pages/frame
 ## Update the content
 
 - Edit English copy in `index.html`; update the matching key in `translations.js` for Taglish. Tests check translation coverage.
+- The browser and sharing title stays **Smoke Less — Offline Cigarette Tracker for Android** in both languages. Open Graph and large-image card tags use the desktop homepage screenshot in `assets/og-home-v1.jpg` (1200 × 630). When refreshing that snapshot, use a new image filename and update both image URLs in `index.html`.
 - `script.js` manages theme/language preferences, the accessible screenshot tabs and calculator. Only theme and language are saved in localStorage. Calculator inputs remain in memory.
 - Screenshots are real Flutter app captures using illustrative records for **Alex**, not user data. There are 24 WebP files: six screens × English/Taglish × light/dark. Naming: `assets/screenshots/{screen}-{en|tag}-{light|dark}.webp`.
 - The first Home image loads immediately; other screenshot variants load on selection. The preview handles rapid selections so a slower image never overwrites the current choice.

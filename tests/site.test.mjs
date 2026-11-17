@@ -4,6 +4,17 @@ import { readFileSync, existsSync, statSync } from 'node:fs';
 import { estimateSpending } from '../calculator.js';
 import { taglish } from '../translations.js';
 const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+test('sharing metadata uses the requested title and packaged homepage screenshot',()=>{
+  const title='Smoke Less — Offline Cigarette Tracker for Android';
+  assert.ok(html.includes(`<title>${title}</title>`));
+  assert.ok(html.includes(`<meta property="og:title" content="${title}">`));
+  assert.ok(html.includes('<meta name="twitter:card" content="summary_large_image">'));
+  const image=new URL(html.match(/property="og:image" content="([^"]+)"/)[1]);
+  assert.equal(image.origin,'https://smokeless-cmndrpaul.pages.dev');
+  const file=readFileSync(new URL(`..${image.pathname}`,import.meta.url));
+  assert.equal(file.readUInt16BE(0),0xffd8);
+  assert.ok(file.length<1000000);
+});
 test('calculator uses exact centavos and 7/30-day periods',()=>{
   assert.deepEqual(estimateSpending('5','8.50'),{weekly:297.5,monthly:1275});
   assert.deepEqual(estimateSpending('0','0'),{weekly:0,monthly:0});
