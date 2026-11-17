@@ -1,55 +1,69 @@
-# Smoke Less showcase
+<p align="center">
+  <img src="assets/logo.png" width="84" height="84" alt="Smoke Less logo">
+</p>
 
-A static, bilingual showcase for the offline Android app. No runtime dependencies, backend, database, analytics scripts, feedback links, or form service.
+<h1 align="center">Smoke Less</h1>
 
-## Preview and check
+<p align="center">
+  <strong>A little less, at your own pace.</strong><br>
+  The official showcase website for Smoke Less, an offline cigarette tracker for Android.
+</p>
 
-Install Node.js 22 or newer, then run from this directory:
+<p align="center">
+  <a href="https://smokeless-cmndrpaul.pages.dev/">Visit the website</a> ·
+  <a href="https://www.mediafire.com/file/2id0ji2y6kd9azn/Smoke-Less-1.0.1-universal.apk/file">Download the Android app</a> ·
+  <a href="https://github.com/cmndrpaul/smokeless-usage">Application repository</a>
+</p>
 
-```powershell
-npm run dev
-# Open http://127.0.0.1:58200
-npm test
-npm run build
-```
+[![Smoke Less desktop homepage](assets/og-home-v1.jpg)](https://smokeless-cmndrpaul.pages.dev/)
 
-If Windows PowerShell blocks `npm.ps1`, use `npm.cmd run dev`, `npm.cmd test`, and `npm.cmd run build` instead.
+## About
 
-There is no `npm install` step. The build only copies public files into `dist/`; README, tests, scripts and Git files are excluded. `dist/` is generated and ignored.
+Smoke Less helps people become aware of their smoking habits and cut down gradually. It offers a supportive space to track cigarettes, notice patterns and choose a manageable next step.
 
-## Cloudflare Pages
+This website introduces the app, lets visitors explore its screens, and provides the Android APK and installation guidance. It is a showcase, not a browser version of the tracker.
 
-This folder is its own repository: `https://github.com/cmndrpaul/smokeless.cmndrpaul.git`. The parent Flutter repository ignores `/website/`.
+## Explore the website
 
-1. Open Cloudflare **Workers & Pages → Create application → Pages → Import an existing Git repository**.
-2. Select `cmndrpaul/smokeless.cmndrpaul` and production branch **main**.
-3. Framework preset: **None**. Root directory: leave blank (repository root).
-4. Build command: **`node scripts/build.mjs`**. Build output directory: **`dist`**.
-5. Deploy. Cloudflare supplies the public `*.pages.dev` address. Future pushes to `main` trigger deployments after Git integration is enabled.
+| Feature | Experience |
+| --- | --- |
+| Interactive phone preview | Browse Home, Log, Calendar, Insights, Craving and Settings using real app screenshots. |
+| Synchronized dark mode | Switch the website and app previews between light and dark together. |
+| English and Taglish | Explore the content and screenshots in either language. |
+| Spending calculator | Estimate weekly and monthly spending using sticks per day and price per stick. |
+| App feature showcase | Learn about logging, gradual goals, reminders and craving support. |
+| Download and installation guide | Get the APK and understand Android installation prompts. |
+| Release notes and FAQs | See what changed and find answers about updates, reminders and local data. |
 
-No environment variables, secrets or Pages Functions are required. Leave Web Analytics disabled if you want to preserve the website’s “no analytics scripts” description. A custom domain is optional and can be connected through Pages settings.
+The design uses Smoke Less’s green palette, cigarette-and-leaf logo, phone mockups and subtle motion. Layouts adapt to phone, tablet and desktop windows, with keyboard navigation and reduced-motion support.
 
-Official references: [Static HTML](https://developers.cloudflare.com/pages/framework-guides/deploy-anything/), [Git integration](https://developers.cloudflare.com/pages/get-started/git-integration/).
+## About the Android app
 
-## Update the content
+- Log cigarette counts, brands, prices, moods and triggers.
+- Reuse brands entered through **Other** on future logs.
+- Review a calendar, spending estimates, trends and common triggers.
+- Set daily limits and gradual taper plans.
+- Choose optional local reminders and evening check-ins.
+- Take a five-minute breathing break during a craving.
+- Read daily notes and general quitting milestones.
+- Use English or Taglish, with light, dark or system appearance.
 
-- Edit English copy in `index.html`; update the matching key in `translations.js` for Taglish. Tests check translation coverage.
-- The browser and sharing title stays **Smoke Less — Offline Cigarette Tracker for Android** in both languages. Open Graph and large-image card tags use the desktop homepage screenshot in `assets/og-home-v1.jpg` (1200 × 630). When refreshing that snapshot, use a new image filename and update both image URLs in `index.html`.
-- `script.js` manages theme/language preferences, the accessible screenshot tabs and calculator. Only theme and language are saved in localStorage. Calculator inputs remain in memory.
-- Screenshots are real Flutter app captures using illustrative records for **Alex**, not user data. There are 24 WebP files: six screens × English/Taglish × light/dark. Naming: `assets/screenshots/{screen}-{en|tag}-{light|dark}.webp`.
-- The first Home image loads immediately; other screenshot variants load on selection. The preview handles rapid selections so a slower image never overwrites the current choice.
-- Update the MediaFire link, version, approximate size, build date and release notes in `index.html` for new APKs. The provided MediaFire URL is linked as supplied; ensure it contains the latest signed universal APK before announcing the site. The listed size reflects the prepared local APK, not an independently verified MediaFire upload.
-- App installation/reminder tests on a real Android phone remain a separate release check. Browser screenshots do not verify notification delivery.
-- `_headers` sets Cloudflare security headers. No fonts, JavaScript libraries or trackers are loaded from third-party CDNs. Opening the download link leaves this website for MediaFire.
+The current download is **Smoke Less 1.0.1**, a universal APK for **Android 7.0 and newer**. The app is free to download and use, with no subscriptions or ads inside it. MediaFire’s external download page may display ads.
 
-## Push future website changes
+## Privacy
 
-Run these commands from **this website folder**, not the Flutter project:
+The Android app works offline, requires no online account, and stores records on the phone. Uninstalling it or clearing its storage deletes those records; there is no cloud recovery.
 
-```powershell
-git add .
-git commit -m "Update Smoke Less showcase"
-git push
-```
+The website remembers only theme and language preferences in the visitor’s browser. Calculator inputs stay in the current tab. No analytics scripts, feedback forms or backend are included in this website.
 
-Keep keystores, `key.properties`, local databases and APK signing passwords outside this repository. The app APK is distributed through MediaFire, not committed here.
+Preview screenshots use illustrative sample records, not private user data. Smoke Less is a tracking and awareness tool, not medical advice or treatment.
+
+## Built with
+
+**HTML · CSS · JavaScript · Cloudflare Pages**
+
+A static website with no runtime packages or database. The Android application is built separately with Flutter and local SQLite storage.
+
+---
+
+Created by [cmndrpaul](https://github.com/cmndrpaul).
