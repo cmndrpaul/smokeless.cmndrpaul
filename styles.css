@@ -1634,6 +1634,157 @@ details>p {
     font-size:.72rem
   }
 }
+/* Longer Taglish copy needs a calmer scale than the short English headline. */
+[data-language=tag] .hero h1 {
+  font-size:clamp(3rem,5.6vw,5rem);
+  line-height:1.12;
+  letter-spacing:-.045em
+}
+[data-language=tag] .hero-leaf {
+  width:.62em;
+  height:.62em;
+  margin-left:.18em
+}
+@media(max-width:760px) {
+  [data-language=tag] .hero h1 {
+    font-size:clamp(2.65rem,11.5vw,3.8rem)
+  }
+}
+.hero-measure {
+  position:absolute;
+  visibility:hidden;
+  pointer-events:none;
+  display:block!important;
+  padding:0!important;
+  margin:0!important;
+  min-height:0!important;
+  top:0;
+  left:0
+}
+.hero-buttons {
+  align-items:flex-start;
+  align-content:flex-start
+}
+/* Keep the complete phone and its controls together on shorter screens. */
+.hero-showcase {
+  --preview-phone-width:clamp(120px,calc(46svh - 138px),286px);
+  scroll-margin-top:0
+}
+.hero-showcase .phone-frame {
+  width:var(--preview-phone-width)
+}
+.hero-showcase .phone-orbit {
+  inset-inline:28px;
+  transform:none
+}
+@media(min-width:761px) {
+  .hero-showcase {
+    position:sticky;
+    top:106px;
+    align-self:start
+  }
+}
+@media(min-width:761px) and (max-height:850px) {
+  .hero {
+    min-height:0;
+    padding-block:40px
+  }
+  .hero-showcase {
+    padding-top:0
+  }
+  .phone-figure figcaption {
+    margin-top:12px;
+    min-height:40px
+  }
+  .screen-tabs {
+    margin-top:10px
+  }
+}
+@media(max-width:760px) {
+  :root {
+    scroll-padding-top:88px
+  }
+  .hero-showcase {
+    padding-top:12px;
+    scroll-margin-top:0
+  }
+  .phone-figure figcaption {
+    margin-top:10px;
+    min-height:35px
+  }
+  .screen-tabs {
+    margin-top:8px
+  }
+  .preview-hint {
+    margin-top:6px
+  }
+}
+/* Browser chrome reduces the usable height even on a wide desktop screen. */
+@media(min-width:761px) and (max-height:850px) {
+  .header-inner {
+    min-height:76px
+  }
+  .hero {
+    align-items:start;
+    min-height:0;
+    padding-block:clamp(16px,3svh,26px)
+  }
+  .hero-copy {
+    padding-block:0
+  }
+  .hero-copy > .eyebrow {
+    margin-bottom:16px
+  }
+  .hero h1 {
+    font-size:clamp(2.5rem,min(6.8vw,10svh),5.5rem);
+    margin-bottom:20px
+  }
+  [data-language=tag] .hero h1 {
+    font-size:clamp(2.25rem,min(5.6vw,8.5svh),4.25rem)
+  }
+  .hero-leaf {
+    width:.62em;
+    height:.62em;
+    margin-left:.2em
+  }
+  .hero-description {
+    font-size:.94rem;
+    line-height:1.7;
+    margin-bottom:22px
+  }
+  .hero-trust {
+    margin-top:18px
+  }
+  .hero-footnote {
+    margin-top:24px
+  }
+}
+@media(min-width:761px) and (max-height:650px) {
+  .hero {
+    padding-block:14px
+  }
+  .hero-copy > .eyebrow {
+    margin-bottom:12px
+  }
+  .hero h1 {
+    font-size:clamp(2rem,min(6vw,8svh),3.25rem);
+    margin-bottom:14px
+  }
+  [data-language=tag] .hero h1 {
+    font-size:clamp(1.9rem,min(5.2vw,7svh),3rem)
+  }
+  .hero-description {
+    font-size:.9rem;
+    line-height:1.6;
+    margin-bottom:16px
+  }
+  .hero-trust {
+    margin-top:14px
+  }
+  .hero-footnote {
+    margin-top:18px
+  }
+}
 @media(prefers-reduced-motion:reduce) {
   :root {
     scroll-behavior:auto

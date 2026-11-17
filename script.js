@@ -3,6 +3,7 @@ import { taglish } from './translations.js';
 
 const root = document.documentElement;
 const strings = new Map([...document.querySelectorAll('[data-i18n]')].map(el => [el, el.textContent]));
+const englishCopy = Object.fromEntries([...strings].map(([el,text]) => [el.dataset.i18n,text]));
 const $ = selector => document.querySelector(selector);
 const tabs = [...document.querySelectorAll('[role="tab"]')];
 const screenshot = $('#app-screenshot');
@@ -16,6 +17,36 @@ const currency = new Intl.NumberFormat('en-PH', {style:'currency',currency:'PHP'
 
 function store(key, value) { try { localStorage.setItem(key,value); } catch { /* Preferences still work for this visit. */ } }
 function t(key, fallback) { return language === 'tag' ? taglish[key] ?? fallback : fallback; }
+function sizeHeroCopy() {
+  const copy = $('.hero-copy');
+  const selectors = [':scope > .eyebrow','h1','.hero-description','.hero-buttons','.hero-trust','.hero-footnote'];
+  const heights = selectors.map(() => 0);
+  const current = root.dataset.language;
+  // Measure both translations offscreen, then reserve the same space for either.
+  for (const locale of ['en','tag']) {
+    const measure = document.createElement('div');
+    measure.className = 'hero hero-measure';
+    measure.setAttribute('aria-hidden','true');
+    measure.inert = true;
+    measure.style.width = `${copy.getBoundingClientRect().width}px`;
+    const clone = copy.cloneNode(true);
+    clone.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+    clone.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      el.textContent = locale === 'tag' ? taglish[key] ?? englishCopy[key] : englishCopy[key];
+    });
+    selectors.forEach(selector => clone.querySelector(selector).style.minHeight = '0');
+    measure.append(clone);
+    document.body.append(measure);
+    root.dataset.language = locale;
+    selectors.forEach((selector,index) => {
+      heights[index] = Math.max(heights[index],clone.querySelector(selector).getBoundingClientRect().height);
+    });
+    measure.remove();
+  }
+  root.dataset.language = current;
+  selectors.forEach((selector,index) => copy.querySelector(selector).style.minHeight = `${Math.ceil(heights[index])}px`);
+}
 function updateScreenshot(announce = true) {
   const request = ++imageRequest;
   const target = `assets/screenshots/${activeScreen}-${language}-${theme}.webp`;
@@ -51,6 +82,7 @@ function updateLanguage() {
   root.lang = language === 'tag' ? 'fil' : 'en';
   root.dataset.language = language;
   for (const [el, english] of strings) el.textContent = t(el.dataset.i18n,english);
+  sizeHeroCopy();
   document.title = language === 'tag' ? 'Smoke Less — Bawas nang kaunti. Mas may oras para sa’yo.' : 'Smoke Less — A little less. A little more you.';
   $('#release-date').textContent = new Intl.DateTimeFormat(language === 'tag' ? 'fil-PH' : 'en-PH',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'}).format(new Date('2026-11-17T00:00:00Z'));
   updateLabels(); updateCalculator(); updateScreenshot(false);
@@ -78,6 +110,12 @@ tabs.forEach((tab,index) => {
     $('#phone-frame').setAttribute('aria-labelledby',tab.id);
     tabs.forEach(item => { const selected = item === tab; item.setAttribute('aria-selected',String(selected)); item.tabIndex = selected ? 0 : -1; });
     updateScreenshot();
+    const preview = $('#app');
+    const bounds = preview.getBoundingClientRect();
+    const headerBottom = $('.site-header').getBoundingClientRect().bottom + 12;
+    if (bounds.top < headerBottom || bounds.bottom > innerHeight - 12) {
+      preview.scrollIntoView({block:'start', behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
+    }
   }
   tab.addEventListener('click',select);
   tab.addEventListener('keydown',event => {
@@ -98,6 +136,11 @@ document.addEventListener('keydown',event => { if (event.key === 'Escape' && men
 document.addEventListener('click',event => { if (!event.target.closest('.site-header')) closeMenu(); });
 $('#copyright-year').textContent = String(new Date().getFullYear());
 updateLanguage(); updateTheme();
+let resizeFrame;
+window.addEventListener('resize',() => {
+  cancelAnimationFrame(resizeFrame);
+  resizeFrame = requestAnimationFrame(sizeHeroCopy);
+});
 const motion = matchMedia('(prefers-reduced-motion: reduce)');
 if (!motion.matches && 'IntersectionObserver' in window) {
   const observer = new IntersectionObserver(entries => entries.forEach(entry => {

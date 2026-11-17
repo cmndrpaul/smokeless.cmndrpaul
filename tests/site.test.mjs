@@ -24,7 +24,7 @@ test('every preview combination is a real, nonempty asset',()=>{
 test('local links resolve and the only download destination is the supplied APK',()=>{
   const ids=new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(match=>match[1]));
   for(const [,hash] of html.matchAll(/href="#([^\"]+)"/g)) assert.ok(ids.has(hash),`Broken anchor: ${hash}`);
-  assert.ok(html.includes('https://www.mediafire.com/file/60o356gslvzpkr4/Smoke-Less-1.0.0-universal.apk/file'));
+  assert.ok(html.includes('https://www.mediafire.com/file/2id0ji2y6kd9azn/Smoke-Less-1.0.1-universal.apk/file'));
   assert.ok(!/mailto:|feedback|testimonials/i.test(html));
   for(const [,path] of html.matchAll(/(?:src|href)="((?:assets\/|\.\/)[^"]+)"/g)) assert.ok(existsSync(new URL(`../${path}`,import.meta.url)),path);
 });
